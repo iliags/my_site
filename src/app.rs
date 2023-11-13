@@ -3,6 +3,7 @@ use egui::{Color32, epaint, style};
 use crate::pages;
 use crate::pages::{Page, View};
 
+/// Page tabs
 #[derive(PartialEq, Default)]
 pub struct Pages {
     page_showcase: pages::showcase::Showcase,
@@ -10,9 +11,9 @@ pub struct Pages {
     open_page: Page,
 }
 
+/// App data
 #[derive(PartialEq, Default)]
 pub struct TemplateApp {
-    // Example stuff:
     page: Pages,
 }
 
