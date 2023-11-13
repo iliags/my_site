@@ -1,6 +1,6 @@
 {
-  "name": "egui Template PWA",
-  "short_name": "egui-template-pwa",
+  "name": "James Lennon Website PWA",
+  "short_name": "website-JamesLennon-pwa",
   "icons": [
     {
       "src": "./icon-256.png",
