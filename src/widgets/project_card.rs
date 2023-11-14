@@ -17,14 +17,12 @@ const SPACING: f32 = 20.0;
 impl StaticView for ProjectCard<'_> {
     fn static_ui(&self, ui: &mut Ui) {
         egui::Frame::none()
-            //.fill(egui::Color32::RED)
+            
             .show(ui, |ui| {
+				ui.add_space(SPACING / 2.0);
                 ui.heading(self.project_name);
-
                 ui.add(
                     egui::Image::new(self.project_image.clone())
-                        //.rounding(10.0)
-                        //.max_size(egui::Vec2{
                         .fit_to_exact_size(egui::Vec2{
                             x: 128.0,
                             y: 128.0
@@ -51,6 +49,7 @@ impl StaticView for ProjectCard<'_> {
 
                 ui.hyperlink_to("Store Page", self.project_link);
 
+				ui.add_space(SPACING);
             });
 
     }
