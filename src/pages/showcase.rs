@@ -6,8 +6,6 @@ use crate::widgets::project_card::{ProjectCard};
 #[derive(Copy, Clone, PartialEq, Default)]
 pub struct Showcase;
 
-// Burning Bridges, Ink, Smelogs Playground, Chex Quest
-
 const PROJECTS: [ProjectCard<'_>; 4] = [
     ProjectCard {
         project_name: "Burning Bridges VR",
