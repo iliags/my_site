@@ -10,3 +10,7 @@ pub use app::TemplateApp;
 pub trait View {
     fn ui(&mut self, ui: &mut egui::Ui);
 }
+
+pub trait StaticView {
+    fn static_ui(&self, ui: &mut egui::Ui);
+}

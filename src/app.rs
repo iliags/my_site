@@ -3,6 +3,7 @@ use egui::{Color32, epaint, style};
 use crate::pages;
 use crate::pages::{Page};
 use crate::View;
+use egui_extras;
 
 /// Page tabs
 #[derive(PartialEq, Default)]
@@ -23,6 +24,7 @@ impl TemplateApp {
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
 
         set_theme(&cc.egui_ctx, DARK);
+        egui_extras::install_image_loaders(&cc.egui_ctx);
 
         Default::default()
     }
@@ -158,7 +160,7 @@ pub const DARK: Theme = Theme {
     /// Widget active
     surface1:  COLOR1X,
     /// Faint BG, widget inactive, widget open
-    surface0: Color32::from_rgb(204, 208, 218),
+    surface0: COLOR1,
     /// Window fill, panel fill, widget noninteractive fill
     base: COLOR0,
     /// Code BG
