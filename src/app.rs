@@ -1,7 +1,8 @@
 use std::default::Default;
 use egui::{Color32, epaint, style};
 use crate::pages;
-use crate::pages::{Page, View};
+use crate::pages::{Page};
+use crate::View;
 
 /// Page tabs
 #[derive(PartialEq, Default)]

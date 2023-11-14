@@ -14,6 +14,7 @@ eframe = { version = "0.23.0", default-features = false, features = [
     "glow",          # Use the glow rendering backend. Alternative: "wgpu".
 ] }
 log = "0.4"
+egui_tiles = "0.3"
 
 # native:
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
