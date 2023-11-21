@@ -6,7 +6,6 @@ pub mod widgets;
 
 pub use app::TemplateApp;
 
-
 pub trait View {
     fn ui(&mut self, ui: &mut egui::Ui);
 }

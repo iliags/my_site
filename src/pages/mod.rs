@@ -1,6 +1,5 @@
-
-pub mod showcase;
 pub mod about;
+pub mod showcase;
 
 #[derive(PartialEq, Eq)]
 pub enum Page {
@@ -13,5 +12,3 @@ impl Default for Page {
         Self::Showcase
     }
 }
-
-
