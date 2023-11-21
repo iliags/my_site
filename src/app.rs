@@ -1,9 +1,9 @@
-use std::default::Default;
-use egui::{Color32, epaint, style};
 use crate::pages;
-use crate::pages::{Page};
+use crate::pages::Page;
 use crate::View;
+use egui::{epaint, style, Color32};
 use egui_extras;
+use std::default::Default;
 
 /// Page tabs
 #[derive(PartialEq, Default)]
@@ -22,8 +22,9 @@ pub struct TemplateApp {
 impl TemplateApp {
     /// Called once before the first frame.
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
-
+        // Set the theme
         set_theme(&cc.egui_ctx, DARK);
+        // Install image loaders
         egui_extras::install_image_loaders(&cc.egui_ctx);
 
         Default::default()
@@ -31,10 +32,8 @@ impl TemplateApp {
 }
 
 impl eframe::App for TemplateApp {
-
     /// Called each time the UI needs repainting, which may be many times per second.
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-
         egui::TopBottomPanel::top("top_panel").show(ctx, |ui| {
             ui.horizontal(|ui| {
                 ui.selectable_value(&mut self.page.open_page, Page::Showcase, "Showcase");
@@ -42,9 +41,7 @@ impl eframe::App for TemplateApp {
             });
         });
 
-
         egui::CentralPanel::default().show(ctx, |ui| {
-
             // Display selected page
             match self.page.open_page {
                 Page::Showcase => {
@@ -61,7 +58,6 @@ impl eframe::App for TemplateApp {
                 egui::warn_if_debug_build(ui);
             });
         });
-
     }
 }
 
@@ -78,7 +74,6 @@ fn powered_by_egui_and_eframe(ui: &mut egui::Ui) {
         ui.label(", for funsies.");
     });
 }
-
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq)]
 pub struct Theme {
@@ -111,13 +106,13 @@ pub struct Theme {
 }
 
 // Colors are selected from a limited palette, setting constants for consistency
-const COLOR0: Color32 = Color32::from_rgb(48,56,65);
+const COLOR0: Color32 = Color32::from_rgb(48, 56, 65);
 
-const COLOR1: Color32 = Color32::from_rgb(58,71,80);
-const COLOR1X: Color32 =  Color32::from_rgb(58*2,71*2,80*2);
+const COLOR1: Color32 = Color32::from_rgb(58, 71, 80);
+const COLOR1X: Color32 = Color32::from_rgb(58 * 2, 71 * 2, 80 * 2);
 
-const COLOR2: Color32 =  Color32::from_rgb(0,173,181);
-const COLOR3: Color32 = Color32::from_rgb(238,238,238);
+const COLOR2: Color32 = Color32::from_rgb(0, 173, 181);
+const COLOR3: Color32 = Color32::from_rgb(238, 238, 238);
 
 pub const DARK: Theme = Theme {
     /// Hyperlink
@@ -158,7 +153,7 @@ pub const DARK: Theme = Theme {
     /// Widget hovered
     surface2: COLOR1,
     /// Widget active
-    surface1:  COLOR1X,
+    surface1: COLOR1X,
     /// Faint BG, widget inactive, widget open
     surface0: COLOR1,
     /// Window fill, panel fill, widget noninteractive fill

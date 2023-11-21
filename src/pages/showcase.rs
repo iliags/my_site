@@ -1,7 +1,6 @@
-use egui::{Ui};
+use crate::widgets::project_card::ProjectCard;
 use crate::StaticView;
-use crate::widgets::project_card::{ProjectCard};
-
+use egui::Ui;
 
 #[derive(Copy, Clone, PartialEq, Default)]
 pub struct Showcase;
@@ -20,13 +19,13 @@ const PROJECTS: [ProjectCard<'_>; 4] = [
         project_image: egui::include_image!("../data/icon_ink.jpg"),
         project_description: "VR Parkour",
         project_tech: "Unreal Engine",
-        project_work: "I created everything except for 3D models and level asset placement",
+        project_work: "I created everything except for 3D models and level asset placement.",
         project_link: "https://store.steampowered.com/app/1156950/INK/",
     },
     ProjectCard {
         project_name: "Smelogs Playground",
         project_image: egui::include_image!("../data/icon_sp.jpg"),
-        project_description: "An RTS with a focus on upgrading units to unlock capabilities",
+        project_description: "An RTS with a focus on upgrading units to unlock capabilities.",
         project_tech: "Unreal Engine",
         project_work: "Pathfinding, C++ engineering",
         project_link: "https://store.steampowered.com/app/1799530/Smelogs_Playground/",
@@ -36,7 +35,7 @@ const PROJECTS: [ProjectCard<'_>; 4] = [
         project_image: egui::include_image!("../data/icon_cq.jpg"),
         project_description: "Remaster of the original Chex Quest",
         project_tech: "Unreal Engine",
-        project_work: "A community developer prior to the project being professionally worked on",
+        project_work: "I was one of the community developers prior to the project being professionally worked on.",
         project_link: "https://store.steampowered.com/app/804270/Chex_Quest_HD/",
     },
 ];
@@ -46,13 +45,11 @@ impl crate::View for Showcase {
         ui.heading("Stuff I've Worked On");
 
         egui::ScrollArea::vertical().show(ui, |ui| {
-
             // Iterate over project list and display info
             for project in PROJECTS.iter() {
                 ui.separator();
                 project.static_ui(ui);
             }
-
         });
     }
 }
