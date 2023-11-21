@@ -5,7 +5,7 @@ use egui::{epaint, style, Color32};
 use egui_extras;
 use std::default::Default;
 
-/// Page tabs
+// Page tabs
 #[derive(PartialEq, Default)]
 pub struct Pages {
     page_showcase: pages::showcase::Showcase,
@@ -13,14 +13,14 @@ pub struct Pages {
     open_page: Page,
 }
 
-/// App data
+// App data
 #[derive(PartialEq, Default)]
 pub struct TemplateApp {
     page: Pages,
 }
 
 impl TemplateApp {
-    /// Called once before the first frame.
+    // Called once before the first frame.
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
         // Set the theme
         set_theme(&cc.egui_ctx, DARK);
@@ -32,7 +32,7 @@ impl TemplateApp {
 }
 
 impl eframe::App for TemplateApp {
-    /// Called each time the UI needs repainting, which may be many times per second.
+    // Called each time the UI needs repainting, which may be many times per second.
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::TopBottomPanel::top("top_panel").show(ctx, |ui| {
             ui.horizontal(|ui| {
@@ -115,7 +115,7 @@ const COLOR2: Color32 = Color32::from_rgb(0, 173, 181);
 const COLOR3: Color32 = Color32::from_rgb(238, 238, 238);
 
 pub const DARK: Theme = Theme {
-    /// Hyperlink
+    // Hyperlink
     rosewater: COLOR2,
 
     flamingo: Color32::from_rgb(221, 120, 120),
@@ -123,9 +123,9 @@ pub const DARK: Theme = Theme {
     mauve: Color32::from_rgb(136, 57, 239),
     red: Color32::from_rgb(210, 15, 57),
 
-    /// Error FG
+    // Error FG
     maroon: Color32::from_rgb(230, 69, 83),
-    /// Warn FG
+    // Warn FG
     peach: Color32::from_rgb(254, 100, 11),
 
     yellow: Color32::from_rgb(223, 142, 29),
@@ -134,37 +134,37 @@ pub const DARK: Theme = Theme {
     sky: Color32::from_rgb(4, 165, 229),
     sapphire: Color32::from_rgb(32, 159, 181),
 
-    /// Selection
+    // Selection
     blue: Color32::from_rgb(30, 102, 123),
     lavender: Color32::from_rgb(114, 135, 253),
 
-    /// Text
+    // Text
     text: COLOR3,
 
     subtext1: Color32::from_rgb(92, 95, 119),
     subtext0: Color32::from_rgb(108, 111, 133),
     overlay2: Color32::from_rgb(124, 127, 147),
 
-    /// Window stroke, selection stroke
+    // Window stroke, selection stroke
     overlay1: Color32::from_rgb(140, 143, 161),
 
     overlay0: Color32::from_rgb(156, 160, 176),
 
-    /// Widget hovered
+    // Widget hovered
     surface2: COLOR1,
-    /// Widget active
+    // Widget active
     surface1: COLOR1X,
-    /// Faint BG, widget inactive, widget open
+    // Faint BG, widget inactive, widget open
     surface0: COLOR1,
-    /// Window fill, panel fill, widget noninteractive fill
+    // Window fill, panel fill, widget noninteractive fill
     base: COLOR0,
-    /// Code BG
+    // Code BG
     mantle: Color32::from_rgb(230, 233, 239),
-    /// Extreme BG
+    // Extreme BG
     crust: Color32::from_rgb(220, 224, 232),
 };
 
-/// Apply the given theme to a [`Context`](egui::Context).
+// Apply the given theme to a [`Context`](egui::Context).
 pub fn set_theme(ctx: &egui::Context, theme: Theme) {
     let old = ctx.style().visuals.clone();
     ctx.set_visuals(egui::Visuals {
