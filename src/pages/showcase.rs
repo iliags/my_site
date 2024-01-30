@@ -5,7 +5,7 @@ use egui::Ui;
 #[derive(Copy, Clone, PartialEq, Default)]
 pub struct Showcase;
 
-const PROJECTS: [ProjectCard<'_>; 4] = [
+const PROJECTS: [ProjectCard<'_>; 5] = [
     ProjectCard {
         project_name: "Burning Bridges VR",
         project_image: egui::include_image!("../data/icon_bb.png"),
@@ -37,6 +37,14 @@ const PROJECTS: [ProjectCard<'_>; 4] = [
         project_tech: "Unreal Engine",
         project_work: "I was one of the community developers prior to the project being professionally worked on.",
         project_link: "https://store.steampowered.com/app/804270/Chex_Quest_HD/",
+    },
+    ProjectCard {
+        project_name: "IdleBreaker",
+        project_image: egui::include_image!("../data/icon_ib.png"),
+        project_description: "Semi-idle brick breaker game.",
+        project_tech: "Unreal Engine, Lyra",
+        project_work: "A project to get myself familiar with Lyra and get out of a burnout.",
+        project_link: "https://jinc.itch.io/idle-breaker",
     },
 ];
 
