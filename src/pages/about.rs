@@ -12,6 +12,10 @@ impl crate::View for About {
 
             ui.separator();
 
+            ui.label("This section has personal opinions and experiences. It is not representative of any organization or group.");
+
+            ui.separator();
+
             ui.vertical(|ui| {
                 ui.label("I was born in Michigan, but have settled (for now) in Arizona. I spent 9 years in the United States Marine Corps, where I was deployed to Okinawa, Afghanistan, and Kuwait.");
                 ui.label("");
@@ -24,6 +28,20 @@ impl crate::View for About {
             });
 
             ui.label("");
+
+            ui.separator();
+            ui.heading("Professional Experience");
+            ui.separator();
+            
+            ui.horizontal(|ui| {
+                ui.spacing_mut().item_spacing.x = 0.0;
+                ui.label("I've worked for a variety of companies, but I decided to open my own: ");
+                ui.hyperlink_to("Jincsoft", "https://www.jincsoft.com/");
+            });
+            ui.label("For now it's a small startup to work on personal projects when I can.");
+
+            ui.label("");
+            ui.separator();
 
             ui.heading("Miscellaneous Experience");
             ui.separator();
@@ -40,10 +58,10 @@ impl crate::View for About {
 
                 
                 ui.label(RichText::new("Programming Languages").font(FontId::proportional(FONT_SIZE)));
-                ui.label("People say to use the right tool for the job, I generally agree with this statement; right up until someone suggests Java. I have enough first-hand experience (as a user and a programmer) to say that anyone who is unironically suggesting Java for a new enterprise application needs to retire. C# isn't too bad (.NET core variants only), JavaScript/ES6 needs a viable alternative, Go is fairly solid, Rust is nice (mostly), C is a necessary evil, and C++ can burn in an abyss.");
+                ui.label("People say to use the right tool for the job, I generally agree with this statement; right up until someone suggests Java (yes, I'm salty). I have enough first-hand experience (as a user and a programmer) to say that anyone who is unironically suggesting Java for a new application needs to go touch grass. C# isn't too bad (.NET core variants only), JavaScript/ES6 needs a viable alternative, Go is fairly solid, Rust is nice (mostly), C is a necessary evil, and C++ can burn in an abyss...it's still necessary");
                 ui.label("");
 
-                ui.label("In the grand scheme of things, choose the one that can be used most efficiently for a situation. Sometimes that means that there are only one or two options available; Java should only be used for legacy codebases.");
+                ui.label("In the grand scheme of things, choose the one that can be used most efficiently for a situation.");
                 ui.label("");
             });
         });
