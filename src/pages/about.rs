@@ -58,7 +58,7 @@ impl crate::View for About {
 
                 
                 ui.label(RichText::new("Programming Languages").font(FontId::proportional(FONT_SIZE)));
-                ui.label("People say to use the right tool for the job, I generally agree with this statement; right up until someone suggests Java (yes, I'm salty). I have enough first-hand experience (as a user and a programmer) to say that anyone who is unironically suggesting Java for a new application needs to go touch grass. C# isn't too bad (.NET core variants only), JavaScript/ES6 needs a viable alternative, Go is fairly solid, Rust is nice (mostly), C is a necessary evil, and C++ can burn in an abyss...it's still necessary");
+                ui.label("People say to use the right tool for the job, I generally agree with this statement; right up until someone suggests Java (yes, I'm salty). I have enough first-hand experience (as a user and a programmer) to say that anyone who is unironically suggesting Java for a new application needs to go touch grass. C# isn't too bad (.NET core variants only), JavaScript/ES6 needs a viable alternative, Go is fairly solid, Rust is nice (mostly), C is a necessary evil, and C++ can burn in an abyss...it's still necessary.");
                 ui.label("");
 
                 ui.label("In the grand scheme of things, choose the one that can be used most efficiently for a situation.");
