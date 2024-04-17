@@ -26,7 +26,7 @@ pub fn set_movement_actions(
     mut _actions: ResMut<Actions>,
     keyboard_input: Res<ButtonInput<KeyCode>>,
     _touch_input: Res<Touches>,
-    mut camera_query: Query<(&mut PanOrbitCamera, &mut Transform), With<Camera3d>>,
+    mut camera_query: Query<(&mut PanOrbitCamera, &mut Transform)>,
 ) {
     // TODO: Make a button input for resetting the camera view
     if GameControl::ResetView.pressed(&keyboard_input) {

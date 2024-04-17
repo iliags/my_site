@@ -1,5 +1,6 @@
-use crate::loading::TextureAssets;
+use crate::loading::{ShowcaseAssets, TextureAssets};
 use crate::GameState;
+use bevy::math::primitives::Direction3d;
 use bevy::prelude::*;
 use bevy::render::camera::ClearColorConfig;
 use bevy_panorbit_camera::PanOrbitCamera;
@@ -10,6 +11,8 @@ impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(OnEnter(GameState::Menu), setup_menu)
             .add_systems(Update, click_play_button.run_if(in_state(GameState::Menu)))
+            .add_systems(Update, update_tiles.run_if(in_state(GameState::Menu)))
+            .add_systems(Update, draw_debug_gizmo.run_if(in_state(GameState::Menu)))
             .add_systems(OnExit(GameState::Menu), cleanup_menu);
     }
 }
@@ -30,6 +33,61 @@ impl Default for ButtonColors {
 }
 
 #[derive(Component)]
+struct Tile;
+
+fn update_tiles(
+    mut tile_query: Query<&mut Transform, With<Tile>>,
+    camera_query: Query<&Transform, (With<Camera>, Without<Tile>)>,
+) {
+    let camera_transform = camera_query.single();
+
+    for mut transform in tile_query.iter_mut() {
+        let new_rotation = Transform::from_translation(transform.translation)
+            .looking_at(camera_transform.translation, Vec3::Y)
+            .rotation;
+        transform.rotation = new_rotation;
+    }
+}
+
+fn draw_debug_gizmo(
+    tile_query: Query<&GlobalTransform, With<Tile>>,
+    camera_query: Query<(&Camera, &GlobalTransform), (With<Camera>, Without<Tile>)>,
+    windows: Query<&Window>,
+    mut gizmos: Gizmos,
+) {
+    let (camera, camera_transform) = camera_query.single();
+
+    for tile_transform in tile_query.iter() {
+        let Some(cursor_position) = windows.single().cursor_position() else {
+            continue;
+        };
+
+        // Calculate a ray pointing from the camera into the world based on the cursor's position.
+        let Some(ray) = camera.viewport_to_world(camera_transform, cursor_position) else {
+            continue;
+        };
+
+        // Calculate if and where the ray is hitting the ground plane.
+        let Some(distance) = ray.intersect_plane(
+            tile_transform.translation(),
+            Plane3d::new(tile_transform.up()),
+        ) else {
+            continue;
+        };
+
+        let point = ray.get_point(distance);
+
+        // Draw a circle just above the ground plane at that position.
+        gizmos.circle(
+            point + tile_transform.up() * 0.01,
+            Direction3d::new_unchecked(tile_transform.up()), // Up vector is already normalized.
+            0.2,
+            Color::WHITE,
+        );
+    }
+}
+
+#[derive(Component)]
 struct Menu;
 
 fn setup_menu(
@@ -37,8 +95,18 @@ fn setup_menu(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
     textures: Res<TextureAssets>,
+    showcase_assets: Res<ShowcaseAssets>,
 ) {
     info!("menu");
+
+    let camera_transform = Transform::from_xyz(-15.5, 0.0, 15.0).looking_at(
+        Vec3 {
+            x: 0.0,
+            y: 10.0,
+            z: 0.0,
+        },
+        Vec3::Y,
+    );
 
     // Camera
     commands.spawn((
@@ -47,19 +115,39 @@ fn setup_menu(
                 clear_color: ClearColorConfig::Custom(Color::rgb(0.1, 0.1, 0.1)),
                 ..Default::default()
             },
-            transform: Transform::from_xyz(-2.5, 4.5, 9.0).looking_at(Vec3::ZERO, Vec3::Y),
+            transform: camera_transform,
             ..default()
         },
         PanOrbitCamera::default(),
     ));
 
-    // Cube
-    commands.spawn(PbrBundle {
-        mesh: meshes.add(Cuboid::new(1.0, 1.0, 1.0)),
-        material: materials.add(Color::rgb_u8(124, 144, 255)),
-        transform: Transform::from_xyz(0.0, 0.5, 0.0),
-        ..default()
-    });
+    // Project tiles
+    let cube_scale = 1.5;
+    let cube = meshes.add(Cuboid::new(1.5 * cube_scale, 1.0 * cube_scale, 0.1));
+
+    let mut y_offset = 0.0;
+    for asset in showcase_assets.all() {
+        // Material
+        let material_handle = materials.add(StandardMaterial {
+            base_color_texture: Some(asset.clone()),
+            alpha_mode: AlphaMode::Opaque,
+            unlit: true,
+            double_sided: true,
+            ..default()
+        });
+
+        commands
+            .spawn(PbrBundle {
+                mesh: cube.clone(),
+                material: material_handle, // Remove type annotation
+                transform: Transform::from_xyz(0.0, y_offset, 0.0)
+                    .looking_at(camera_transform.translation, Vec3::Y),
+                ..default()
+            })
+            .insert(Tile);
+
+        y_offset += 1.5;
+    }
 
     // Light
     commands.spawn(PointLightBundle {
