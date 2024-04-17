@@ -1,6 +1,7 @@
 use crate::loading::TextureAssets;
 use crate::GameState;
 use bevy::prelude::*;
+use bevy::render::camera::ClearColorConfig;
 use bevy_panorbit_camera::PanOrbitCamera;
 
 pub struct MenuPlugin;
@@ -39,14 +40,20 @@ fn setup_menu(
 ) {
     info!("menu");
 
+    // Camera
     commands.spawn((
         Camera3dBundle {
+            camera: Camera {
+                clear_color: ClearColorConfig::Custom(Color::rgb(0.1, 0.1, 0.1)),
+                ..Default::default()
+            },
             transform: Transform::from_xyz(-2.5, 4.5, 9.0).looking_at(Vec3::ZERO, Vec3::Y),
             ..default()
         },
         PanOrbitCamera::default(),
     ));
 
+    // Cube
     commands.spawn(PbrBundle {
         mesh: meshes.add(Cuboid::new(1.0, 1.0, 1.0)),
         material: materials.add(Color::rgb_u8(124, 144, 255)),
@@ -54,6 +61,7 @@ fn setup_menu(
         ..default()
     });
 
+    // Light
     commands.spawn(PointLightBundle {
         point_light: PointLight {
             shadows_enabled: true,
@@ -63,6 +71,7 @@ fn setup_menu(
         ..default()
     });
 
+    // Buttons
     commands.spawn((
         NodeBundle {
             style: Style {
