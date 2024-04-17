@@ -1,47 +1,53 @@
-#![warn(clippy::all, rust_2018_idioms)]
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // hide console window on Windows in release
+// disable console on windows for release builds
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-// When compiling natively:
-#[cfg(not(target_arch = "wasm32"))]
-fn main() -> eframe::Result<()> {
-    env_logger::init(); // Log to stderr (if you run with `RUST_LOG=debug`).
+use bevy::asset::AssetMetaCheck;
+use bevy::prelude::*;
+use bevy::window::PrimaryWindow;
+use bevy::winit::WinitWindows;
+use bevy::DefaultPlugins;
+use my_site::GamePlugin;
+use std::io::Cursor;
+use winit::window::Icon;
 
-    let native_options = eframe::NativeOptions {
-        // initial_window_size: Some([400.0, 300.0].into()),
-        //min_window_size: Some([300.0, 220.0].into()),
-        ..Default::default()
-    };
-    eframe::run_native(
-        "My Website",
-        native_options,
-        Box::new(|cc| {
-            // Install image loaders
-            egui_extras::install_image_loaders(&cc.egui_ctx);
-            Box::new(my_site::TemplateApp::new(cc))
-        }),
-    )
+fn main() {
+    App::new()
+        .insert_resource(Msaa::Off)
+        .insert_resource(AssetMetaCheck::Never)
+        .insert_resource(ClearColor(Color::rgb(0.4, 0.4, 0.4)))
+        .add_plugins(DefaultPlugins.set(WindowPlugin {
+            primary_window: Some(Window {
+                title: "My Website".to_string(), // ToDo
+                // Bind to canvas included in `index.html`
+                canvas: Some("#bevy".to_owned()),
+                // Tells wasm not to override default event handling, like F5 and Ctrl+R
+                prevent_default_event_handling: false,
+                ..default()
+            }),
+            ..default()
+        }))
+        .add_plugins(GamePlugin)
+        .add_systems(Startup, set_window_icon)
+        .run();
 }
 
-// When compiling to web using trunk:
-#[cfg(target_arch = "wasm32")]
-fn main() {
-    // Redirect `log` message to `console.log` and friends:
-    eframe::WebLogger::init(log::LevelFilter::Debug).ok();
-
-    let web_options = eframe::WebOptions::default();
-
-    wasm_bindgen_futures::spawn_local(async {
-        eframe::WebRunner::new()
-            .start(
-                "the_canvas_id", // hardcode it
-                web_options,
-                Box::new(|cc| {
-                    // Install image loaders
-                    egui_extras::install_image_loaders(&cc.egui_ctx);
-                    Box::new(my_site::TemplateApp::new(cc))
-                }),
-            )
-            .await
-            .expect("failed to start eframe");
-    });
+// Sets the icon on windows and X11
+fn set_window_icon(
+    windows: NonSend<WinitWindows>,
+    primary_window: Query<Entity, With<PrimaryWindow>>,
+) {
+    let primary_entity = primary_window.single();
+    let Some(primary) = windows.get_window(primary_entity) else {
+        return;
+    };
+    let icon_buf = Cursor::new(include_bytes!(
+        "../build/macos/AppIcon.iconset/icon_256x256.png"
+    ));
+    if let Ok(image) = image::load(icon_buf, image::ImageFormat::Png) {
+        let image = image.into_rgba8();
+        let (width, height) = image.dimensions();
+        let rgba = image.into_raw();
+        let icon = Icon::from_rgba(rgba, width, height).unwrap();
+        primary.set_window_icon(Some(icon));
+    };
 }
