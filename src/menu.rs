@@ -59,31 +59,32 @@ fn draw_debug_gizmo(
 
     for tile_transform in tile_query.iter() {
         let Some(cursor_position) = windows.single().cursor_position() else {
-            continue;
+            return;
         };
 
         // Calculate a ray pointing from the camera into the world based on the cursor's position.
         let Some(ray) = camera.viewport_to_world(camera_transform, cursor_position) else {
-            continue;
+            return;
         };
 
         // Calculate if and where the ray is hitting the ground plane.
         let Some(distance) = ray.intersect_plane(
             tile_transform.translation(),
-            Plane3d::new(tile_transform.up()),
+            Plane3d::new(camera_transform.forward()),
         ) else {
-            continue;
+            return;
         };
 
         let point = ray.get_point(distance);
 
         // Draw a circle just above the ground plane at that position.
         gizmos.circle(
-            point + tile_transform.up() * 0.01,
-            Direction3d::new_unchecked(tile_transform.up()), // Up vector is already normalized.
+            point + tile_transform.forward() * 0.1,
+            Direction3d::new_unchecked(tile_transform.forward()), // Up vector is already normalized.
             0.2,
             Color::WHITE,
         );
+        return;
     }
 }
 
