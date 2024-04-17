@@ -14,7 +14,11 @@ fn main() -> eframe::Result<()> {
     eframe::run_native(
         "My Website",
         native_options,
-        Box::new(|cc| Box::new(my_site::TemplateApp::new(cc))),
+        Box::new(|cc| {
+            // Install image loaders
+            egui_extras::install_image_loaders(&cc.egui_ctx);
+            Box::new(my_site::TemplateApp::new(cc))
+        }),
     )
 }
 
@@ -31,7 +35,11 @@ fn main() {
             .start(
                 "the_canvas_id", // hardcode it
                 web_options,
-                Box::new(|cc| Box::new(my_site::TemplateApp::new(cc))),
+                Box::new(|cc| {
+                    // Install image loaders
+                    egui_extras::install_image_loaders(&cc.egui_ctx);
+                    Box::new(my_site::TemplateApp::new(cc))
+                }),
             )
             .await
             .expect("failed to start eframe");

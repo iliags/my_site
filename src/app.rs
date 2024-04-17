@@ -25,9 +25,6 @@ impl TemplateApp {
         // Set the theme
         set_theme(&cc.egui_ctx, DARK);
 
-        // Install image loaders
-        egui_extras::install_image_loaders(&cc.egui_ctx);
-
         Default::default()
     }
 }

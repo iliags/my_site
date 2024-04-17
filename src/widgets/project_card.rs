@@ -19,6 +19,7 @@ impl StaticView for ProjectCard<'_> {
         egui::Frame::none().show(ui, |ui| {
             ui.add_space(SPACING / 2.0);
             ui.heading(self.project_name);
+
             ui.add(
                 egui::Image::new(self.project_image.clone())
                     .fit_to_exact_size(egui::Vec2 { x: 128.0, y: 128.0 }),

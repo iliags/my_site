@@ -11,7 +11,7 @@ eframe = { version = "0.27", default-features = false, features = [
     "default_fonts", # Embed the default egui fonts.
     "glow",          # Use the glow rendering backend. Alternative: "wgpu".
 ] }
-egui_extras = { version = "*", features = ["default", "all_loaders"] }
+egui_extras = { version = "*", features = ["default", "all_loaders", "image"] }
 image = { version = "0.25.1", features = ["png"] }
 log = "0.4"
 
