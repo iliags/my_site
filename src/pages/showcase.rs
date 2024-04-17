@@ -16,7 +16,7 @@ const PROJECTS: [ProjectCard<'_>; 5] = [
     },
     ProjectCard {
         project_name: "INK",
-        project_image: egui::include_image!("../data/icon_ink.jpg"),
+        project_image: egui::include_image!("../data/icon_ink.png"),
         project_description: "VR Parkour",
         project_tech: "Unreal Engine",
         project_work: "I created everything except for 3D models and level asset placement.",
@@ -24,7 +24,7 @@ const PROJECTS: [ProjectCard<'_>; 5] = [
     },
     ProjectCard {
         project_name: "Smelogs Playground",
-        project_image: egui::include_image!("../data/icon_sp.jpg"),
+        project_image: egui::include_image!("../data/icon_sp.png"),
         project_description: "An RTS with a focus on upgrading units to unlock capabilities.",
         project_tech: "Unreal Engine",
         project_work: "Pathfinding, C++ engineering",
@@ -32,7 +32,7 @@ const PROJECTS: [ProjectCard<'_>; 5] = [
     },
     ProjectCard {
         project_name: "Chex Quest HD",
-        project_image: egui::include_image!("../data/icon_cq.jpg"),
+        project_image: egui::include_image!("../data/icon_cq.png"),
         project_description: "Remaster of the original Chex Quest",
         project_tech: "Unreal Engine",
         project_work: "I was one of the community developers prior to the project being professionally worked on.",
