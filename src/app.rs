@@ -34,7 +34,7 @@ impl eframe::App for MySite {
         egui::TopBottomPanel::top("top_panel").show(ctx, |ui| {
             ui.horizontal(|ui| {
                 ui.selectable_value(&mut self.page.open_page, Page::Showcase, "Showcase");
-                ui.selectable_value(&mut self.page.open_page, Page::AboutMe, "About Me");
+                //ui.selectable_value(&mut self.page.open_page, Page::AboutMe, "About Me");
             });
         });
 
@@ -48,28 +48,8 @@ impl eframe::App for MySite {
                     self.page.page_about.ui(ui);
                 }
             }
-
-            // Info at the bottom of the page
-            ui.with_layout(egui::Layout::bottom_up(egui::Align::LEFT), |ui| {
-                powered_by_egui_and_eframe(ui);
-                egui::warn_if_debug_build(ui);
-            });
         });
     }
-}
-
-fn powered_by_egui_and_eframe(ui: &mut egui::Ui) {
-    ui.horizontal(|ui| {
-        ui.spacing_mut().item_spacing.x = 0.0;
-        ui.label("Created with ");
-        ui.hyperlink_to("egui", "https://github.com/emilk/egui");
-        ui.label(" and ");
-        ui.hyperlink_to(
-            "eframe",
-            "https://github.com/emilk/egui/tree/master/crates/eframe",
-        );
-        ui.label(", for funsies.");
-    });
 }
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq)]
