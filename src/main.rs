@@ -17,7 +17,7 @@ fn main() -> eframe::Result<()> {
         Box::new(|cc| {
             // Install image loaders
             egui_extras::install_image_loaders(&cc.egui_ctx);
-            Box::new(my_site::TemplateApp::new(cc))
+            Ok(Box::new(my_site::MySite::new(cc)))
         }),
     )
 }
@@ -38,7 +38,7 @@ fn main() {
                 Box::new(|cc| {
                     // Install image loaders
                     egui_extras::install_image_loaders(&cc.egui_ctx);
-                    Box::new(my_site::TemplateApp::new(cc))
+                    Ok(Box::new(my_site::MySite::new(cc)))
                 }),
             )
             .await

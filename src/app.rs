@@ -2,7 +2,6 @@ use crate::pages;
 use crate::pages::Page;
 use crate::View;
 use egui::{epaint, style, Color32};
-use egui_extras;
 use std::default::Default;
 
 // Page tabs
@@ -15,11 +14,11 @@ pub struct Pages {
 
 // App data
 #[derive(PartialEq, Default)]
-pub struct TemplateApp {
+pub struct MySite {
     page: Pages,
 }
 
-impl TemplateApp {
+impl MySite {
     // Called once before the first frame.
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
         // Set the theme
@@ -29,7 +28,7 @@ impl TemplateApp {
     }
 }
 
-impl eframe::App for TemplateApp {
+impl eframe::App for MySite {
     // Called each time the UI needs repainting, which may be many times per second.
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::TopBottomPanel::top("top_panel").show(ctx, |ui| {
