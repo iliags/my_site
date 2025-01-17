@@ -2,6 +2,7 @@ use crate::pages;
 use crate::pages::Page;
 use crate::View;
 use egui::{epaint, style, Color32};
+use egui_extras::install_image_loaders;
 use std::default::Default;
 
 // Page tabs
@@ -23,6 +24,7 @@ impl MySite {
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
         // Set the theme
         set_theme(&cc.egui_ctx, DARK);
+        install_image_loaders(&cc.egui_ctx);
 
         Default::default()
     }

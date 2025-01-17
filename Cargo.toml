@@ -5,8 +5,8 @@ authors = ["James Lennon"]
 edition = "2021"
 
 [dependencies]
-egui = "0.28"
-eframe = { version = "0.28", default-features = false, features = [
+egui = "0.30"
+eframe = { version = "0.30", default-features = false, features = [
     "default_fonts", # Embed the default egui fonts.
     "glow",          # Use the glow rendering backend. Alternative: "wgpu".
 ] }
@@ -21,10 +21,10 @@ env_logger = "0.11"
 # web:
 # Note: The web crates cannot be updated until egui is updated
 # past 0.28.1 due to a breaking change in the wasm-bindgen crate.
-[target.'cfg(target_arch = "wasm32")'.dependencies]
-wasm-bindgen-futures = "=0.4.42"
-wasm-bindgen = "=0.2.92"
-web-sys = "=0.3.69"
+#[target.'cfg(target_arch = "wasm32")'.dependencies]
+#wasm-bindgen-futures = "=0.4.42"
+#wasm-bindgen = "=0.2.92"
+#web-sys = "=0.3.69"
 
 [profile.release]
 opt-level = 2   # fast and small wasm
